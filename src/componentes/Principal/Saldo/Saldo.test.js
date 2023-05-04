@@ -6,7 +6,6 @@ describe('Componente <Saldo />', () => {
     render(<Saldo saldo={1000} />);
 
     const saldo = screen.getByTestId('saldo');
-
     expect(saldo).toHaveTextContent('R$ 1000');
   });
 });

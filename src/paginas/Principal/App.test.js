@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from '../../routes';
 
 describe('Componente <App />', () => {
   test('Deve permitir adicionar uma transação em Extrato', () => {
@@ -19,5 +20,17 @@ describe('Componente <App />', () => {
     const itemExtrato = screen.getByRole('listitem');
 
     expect(novaTransacao).toContainElement(itemExtrato);
+  });
+
+  test('Deve navegar até a pagina correspondente ao link clicado', async () => {
+    render(<AppRoutes />, { wrapper: BrowserRouter });
+
+    const linkPaginaCartao = screen.getByText('Cartões');
+    expect(linkPaginaCartao).toBeInTheDocument();
+
+    userEvent.click(linkPaginaCartao);
+
+    const tituloPaginaCartoes = await screen.findByText('Meus cartões');
+    expect(tituloPaginaCartoes).toBeInTheDocument();
   });
 });
